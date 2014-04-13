@@ -91,7 +91,7 @@ end
 ].each do |script|
   cookbook_file "#{node['drupal-solr']['solr_home']}/conf/#{script}" do
     source "#{script}"
-    action :create_if_missin
+    action :create_if_missing
     owner node['drupal-solr']['tomcat_user']
     group node['drupal-solr']['tomcat_group']
     mode 0755

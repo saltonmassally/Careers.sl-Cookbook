@@ -1,23 +1,42 @@
-application "packaginator" do
-  path "/srv/packaginator"
-  owner "nobody"
-  group "nogroup"
-  repository "https://github.com/coderanger/packaginator.git"
-  revision "master"
-  migrate true
-  packages ["libpq-dev", "git-core", "mercurial"]
+include_recipe 'deploy'
+
+node[:deploy].each do |application, deploy|
+
+  opsworks_deploy_dir do
+    user deploy[:user]
+    group deploy[:group]
+    path deploy[:deploy_to]
+  end
+
+  opsworks_deploy do
+    deploy_data deploy
+    app application
+  end
+
+  application "smssuite" do
+     path deploy[:deploy_to]
+     owner deploy[:user]
+     group deploy[:group]
+     repository deploy[:scm][:repository]
+     revision deploy[:scm][:revision]
+     migrate node[:smssuite][:rapidsms_stack][:migrate]
+     migration_command node[:smssuite][:rapidsms_stack][:restart_command]
+     environment deploy[:environment].to_hash
+     symlink_before_migrate( node[:smssuite][:rapidsms_stack][:restart_command] )
+     action deploy[:action]
+     packages ["libpq-dev", "git-core", "mercurial"]
+     restart_command "sleep #{deploy[:sleep_before_restart]} && #{node[:smssuite][:rapidsms_stack][:restart_command]}"
 
   django do
-    packages ["redis"]
-    requirements "requirements/mkii.txt"
+    requirements "requirements/base.txt"
     settings_template "settings.py.erb"
-    debug true
+    debug False
     collectstatic "build_static --noinput"
     database do
-      database "packaginator"
-      engine "postgresql_psycopg2"
-      username "packaginator"
-      password "awesome_password"
+      database node[:smssuite][:rapidsms_stack][:database][:name]
+      engine node[:smssuite][:rapidsms_stack][:database][:engine]
+      username node[:smssuite][:rapidsms_stack][:database][:username]
+      password node[:smssuite][:rapidsms_stack][:database][:password]
     end
     database_master_role "packaginator_database_master"
   end
@@ -47,3 +66,6 @@ application "packaginator" do
 
 end
 
+end
+
+a
