@@ -18,4 +18,4 @@ default['drupal-solr']['tomcat_lib_dir'] = node['opsworks_java']['tomcat']['lib_
 default['drupal-solr']['tomcat_conf_dir'] = node['opsworks_java']['tomcat']['catalina_base_dir']
 default['drupal-solr']['tomcat_webapp_dir'] = node['opsworks_java']['tomcat']['webapps_base_dir']
 default['drupal-solr']['tomcat_home'] = "/usr/share/tomcat#{node['opsworks_java']['tomcat']['base_version']}"
-default['drupal-solr']['solr_home'] = node['drupal-solr']['tomcat_home']} + "/solr"
+default['drupal-solr']['solr_home'] = node['drupal-solr']['tomcat_home'] + "/solr"
