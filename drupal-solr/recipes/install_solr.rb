@@ -2,22 +2,6 @@
 ## Recipe:: install_solr
 ##
 
-include_recipe "curl"
-
-directory node['drupal-solr']['home_dir'] do
-  owner node['drupal-solr']['tomcat_user']
-  group node['drupal-solr']['tomcat_group']
-  mode 0775
-  recursive true
-end
-
-directory node['drupal-solr']['war_dir'] do
-  owner node['drupal-solr']['tomcat_user']
-  group node['drupal-solr']['tomcat_group']
-  mode 0775
-  recursive true
-end
-
 
 # Extract war file from solr archive
 ark 'solr_war' do
@@ -50,7 +34,25 @@ remote_file "#{node['drupal-solr']['tomcat_webapp_dir']}/solr.war" do
   mode 0755
 end
 
+directory "#{node['drupal-solr']['tomcat_home']}/solr" do
+  owner node['drupal-solr']['tomcat_user']
+  group node['drupal-solr']['tomcat_group']
+  mode 0755
+  recursive true
+end
 
+
+template "solr.xml" do
+  path ::File.join(node["solr_app"]["solr_home"],"solr.xml")
+  owner node["tomcat"]["user"]
+  group node["tomcat"]["group"]
+  source "solr.xml.erb"
+  cookbook "solr_app"
+  variables(
+    :collections => Array(Pathname.new(node["solr_app"]["solr_home"]).children.select { |c| c.directory? }.collect { |p| p.basename })
+  )
+ notifies :restart, "service[tomcat]"
+end
 
 remote_file "download-solr" do
   source node['drupal-solr']['url']

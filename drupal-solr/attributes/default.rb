@@ -12,12 +12,9 @@ default['drupal-solr']['url']       = "http://archive.apache.org/dist/lucene/sol
 default['drupal-solr']['app_name']  = "solr"
 default['drupal-solr']['log_format'] = "common"
 default['drupal-solr']['custom_conf_file'] = ''
-default['drupal-solr']['war_dir']   = "/opt/solr"
-default['drupal-solr']['home_dir']  = "/opt/solr/#{node['drupal-solr']['app_name']}"
 default['drupal-solr']['tomcat_user'] = node['opsworks_java']['tomcat']['user']
 default['drupal-solr']['tomcat_group'] = node['opsworks_java']['tomcat']['group']
 default['drupal-solr']['tomcat_lib_dir'] = node['opsworks_java']['tomcat']['lib_dir']
 default['drupal-solr']['tomcat_conf_dir'] = node['opsworks_java']['tomcat']['catalina_base_dir']
 default['drupal-solr']['tomcat_webapp_dir'] = node['opsworks_java']['tomcat']['webapps_base_dir']
-
-default['drupal-solr']['conf_source_glob'] = getSolrConfPath(node['drupal-solr']['module_version'], node['drupal-solr']['solr_version'])
+default['drupal-solr']['tomcat_home'] = "/usr/share/tomcat#{node['opsworks_java']['tomcat']['base_version']}"
