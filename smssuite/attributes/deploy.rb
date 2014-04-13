@@ -30,7 +30,7 @@ node[:deploy].each do |application, deploy|
   django do
     requirements "requirements/base.txt"
     settings_template "settings.py.erb"
-    debug False
+    debug True
     collectstatic "build_static --noinput"
     database do
       database node[:smssuite][:rapidsms_stack][:database][:name]
@@ -43,8 +43,7 @@ node[:deploy].each do |application, deploy|
   gunicorn do
     only_if { node['roles'].include? 'packaginator_application_server' }
     app_module :django
-    settings_template ''
-    port 8080
+    port node[:smssuite][:rapidsms_stack][:gunicorn][:port]
   end
 
   celery do
