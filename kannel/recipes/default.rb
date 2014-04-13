@@ -11,8 +11,9 @@ cookbook_file "#{Chef::Config[:file_cache_path]}/kannel_1.5.0-0_amd64.deb" do
     action :create_if_missing
 end
 
-apt_package "#{Chef::Config[:file_cache_path]}/kannel_1.5.0-0_amd64.deb" do
-  action :install
+dpkg_package  "kannel" do
+    source  "#{Chef::Config[:file_cache_path]}/kannel_1.5.0-0_amd64.deb"
+    action :install
 end
 
 execute "ldconfig" do
