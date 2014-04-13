@@ -1,4 +1,3 @@
-name             "careerssl"
 maintainer       "Salton Massally"
 maintainer_email "salton.massally@gmail.com"
 license          "MIT"
