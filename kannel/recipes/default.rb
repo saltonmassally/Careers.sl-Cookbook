@@ -25,7 +25,63 @@ group "kannel" do
    action :create
 end
 
-template "/etc/default/kannel" do
+directory "#{node[:kannel][:config_folder_path]}/smsc" do
+  owner "kannel"
+  group "kannel"
+  mode 0775
+  recursive true
+end
+
+template "#{node[:kannel][:config_folder_path]}/smsc/africell.conf" do
+  source "smsc-africell.conf.erb"
+  mode 0755
+  owner "kannel"
+  group "kannel"
+end
+
+template "#{node[:kannel][:config_folder_path]}/smsc/fake.conf" do
+  source "user-default.conf.erb"
+  mode 0755
+  owner "kannel"
+  group "kannel"
+end
+
+directory "#{node[:kannel][:config_folder_path]}/services" do
+  owner "kannel"
+  group "kannel"
+  mode 0775
+  recursive true
+end
+
+template "#{node[:kannel][:config_folder_path]}/services/ping.conf" do
+  source "service-ping.conf.erb"
+  mode 0755
+  owner "kannel"
+  group "kannel"
+end
+
+template "#{node[:kannel][:config_folder_path]}/services/rapidsms.conf" do
+  source "service-rapidsms.conf.erb"
+  mode 0755
+  owner "kannel"
+  group "kannel"
+end
+
+directory "#{node[:kannel][:config_folder_path]}/users" do
+  owner "kannel"
+  group "kannel"
+  mode 0775
+  recursive true
+end
+
+template "#{node[:kannel][:config_folder_path]}/users/default.conf" do
+  source "user-default.conf.erb"
+  mode 0755
+  owner "kannel"
+  group "kannel"
+end
+
+template "#{node[:kannel][:config_folder_path]}/kannel" do
   source "kannel.erb"
   mode 0755
   owner "kannel"

@@ -1,4 +1,4 @@
-default[:kannel][:config_folder_path] = '/etc/kannel/'
+default[:kannel][:config_folder_path] = '/etc/kannel'
 
 default[:kannel][:admin_port] = 13000
 default[:kannel][:admin_password] = '1234'

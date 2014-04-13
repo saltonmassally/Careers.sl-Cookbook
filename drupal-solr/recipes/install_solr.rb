@@ -18,6 +18,16 @@ directory node['drupal-solr']['war_dir'] do
   recursive true
 end
 
+
+# Extract war file from solr archive
+ark 'solr_war' do
+  url node['drupal-solr']['url']
+  action :cherry_pick
+  creates node["drupal-solr"]["archive_war_path"]
+  path ::File.join(Chef::Config[:file_cache_path], "solr_app")
+  strip_leading_dir false
+end
+
 src_filepath = "#{Chef::Config['file_cache_path']}/solr-#{node['drupal-solr']['solr_version']}.tgz"
 
 remote_file "download-solr" do
