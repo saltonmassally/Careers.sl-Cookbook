@@ -2,7 +2,6 @@
 ## Recipe:: install_solr
 ##
 
-include_recipe "tomcat"
 include_recipe "curl"
 
 directory node['drupal-solr']['home_dir'] do
