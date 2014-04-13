@@ -99,10 +99,10 @@ end
 end
 
 template "#{node['drupal-solr']['solr_home']}/solr.xml}" do
-  owner node["tomcat"]["user"]
-  group node["tomcat"]["group"]
-  source "solr_context.xml.erb"
- notifies :restart, "service[tomcat]"
+  owner node['drupal-solr']['tomcat_user']
+  group node['drupal-solr']['tomcat_group']
+  source 'solr_context.xml.erb'
+ notifies :restart, 'service[tomcat]'
 end
 
 

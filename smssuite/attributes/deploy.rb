@@ -38,12 +38,12 @@ node[:deploy].each do |application, deploy|
       username node[:smssuite][:rapidsms_stack][:database][:username]
       password node[:smssuite][:rapidsms_stack][:database][:password]
     end
-    database_master_role "packaginator_database_master"
   end
 
   gunicorn do
     only_if { node['roles'].include? 'packaginator_application_server' }
     app_module :django
+    settings_template ''
     port 8080
   end
 
