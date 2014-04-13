@@ -1,5 +1,5 @@
 site :opscode
-
+metadata
 cookbook 'apt'
 cookbook 'apache2'
 cookbook 'vim'
