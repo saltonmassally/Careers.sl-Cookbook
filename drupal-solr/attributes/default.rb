@@ -4,11 +4,10 @@
 # must be one of the versions available at http://archive.apache.org/dist/lucene/solr/
 # must be consistent with node['drupal-solr']['apachesolr_conf_dir']
 
-default['drupal-solr']['drupal_root'] = ''
-default['drupal-solr']['module_version'] = "7.x-1.3"
-default['drupal-solr']['solr_version']   = '3.5.0'
+
+default['drupal-solr']['solr_version']   = '4.7.1'
 default['drupal-solr']['url']       = "http://archive.apache.org/dist/lucene/solr/" +
-                                       node['drupal-solr']['solr_version'] + "/apache-solr-" +
+                                       node['drupal-solr']['solr_version'] + "/solr-" +
                                        node['drupal-solr']['solr_version']+ ".tgz"
 default['drupal-solr']['app_name']  = "solr"
 default['drupal-solr']['log_format'] = "common"
