@@ -89,8 +89,8 @@ end
    'stopwords.txt',
    'synonyms.txt',
 ].each do |script|
-  cookbook_file "#{node['drupal-solr']['solr_home']}/conf/#{scrript}" do
-    source "#{scrript}"
+  cookbook_file "#{node['drupal-solr']['solr_home']}/conf/#{script}" do
+    source "#{script}"
     action :create_if_missin
     owner node['drupal-solr']['tomcat_user']
     group node['drupal-solr']['tomcat_group']
