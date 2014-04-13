@@ -54,8 +54,8 @@ end
 
 
 template "#{node['drupal-solr']['tomcat_conf_dir']}/Catalina/localhost/solr_context.xml}" do
-  owner node["tomcat"]["user"]
-  group node["tomcat"]["group"]
+  owner node['drupal-solr']['tomcat_user']
+  group node['drupal-solr']['tomcat_group']
   source "solr_context.xml.erb"
 end
 
