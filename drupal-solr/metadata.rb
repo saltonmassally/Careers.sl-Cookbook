@@ -1,6 +1,6 @@
 name             "drupal-solr"
-maintainer       "Amir Kadivar"
-maintainer_email "amir@evolvingweb.ca"
+maintainer       "Salton Massally"
+maintainer_email "salton.massally@gmail.com"
 license          "Apache 2.0"
 description      "Installs/Configures Solr on opswork"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
