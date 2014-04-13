@@ -9,13 +9,14 @@ default['drupal-solr']['solr_version']   = '4.7.1'
 default['drupal-solr']['url']       = "http://archive.apache.org/dist/lucene/solr/" +
                                        node['drupal-solr']['solr_version'] + "/solr-" +
                                        node['drupal-solr']['solr_version']+ ".tgz"
+default["solr_app"]["archive_war_path"] = ::File.join("solr-#{node['drupal-solr']['solr_version']}", "dist", "solr-#{['drupal-solr']['solr_version']}.war")
 default['drupal-solr']['app_name']  = "solr"
 default['drupal-solr']['log_format'] = "common"
 default['drupal-solr']['custom_conf_file'] = ''
 default['drupal-solr']['war_dir']   = "/opt/solr"
 default['drupal-solr']['home_dir']  = "/opt/solr/#{node['drupal-solr']['app_name']}"
-default['drupal-solr']['make_solr_default_search'] = true
-default['drupal-solr']['index_drupal_content'] = false
+default['drupal-solr']['tomcat_user'] = node['opsworks_java']['tomcat']['user']
+default['drupal-solr']['tomcat_group'] = node['opsworks_java']['tomcat']['group']
 
 # Logic based on the following:
 #   http://drupalcode.org/project/apachesolr.git/blob/refs/heads/5.x-2.x:/schema.xml

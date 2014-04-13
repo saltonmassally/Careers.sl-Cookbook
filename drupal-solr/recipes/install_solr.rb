@@ -5,20 +5,20 @@
 include_recipe "curl"
 
 directory node['drupal-solr']['home_dir'] do
-  owner node['tomcat']['user']
-  group node['tomcat']['group']
+  owner node['drupal-solr']['tomcat_user']
+  group node['drupal-solr']['tomcat_group']
   mode 0775
   recursive true
 end
 
 directory node['drupal-solr']['war_dir'] do
-  owner node['tomcat']['user']
-  group node['tomcat']['group']
+  owner node['drupal-solr']['tomcat_user']
+  group node['drupal-solr']['tomcat_group']
   mode 0775
   recursive true
 end
 
-src_filepath = "#{Chef::Config['file_cache_path']}/apache-solr-#{node['drupal-solr']['solr_version']}.tgz"
+src_filepath = "#{Chef::Config['file_cache_path']}/solr-#{node['drupal-solr']['solr_version']}.tgz"
 
 remote_file "download-solr" do
   source node['drupal-solr']['url']

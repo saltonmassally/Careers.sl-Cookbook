@@ -20,6 +20,11 @@ execute "ldconfig" do
   user "root"
 end
 
+group "kannel" do
+   members "kannel"
+   action :create
+end
+
 template "/etc/default/kannel" do
   source "kannel.erb"
   mode 0755
