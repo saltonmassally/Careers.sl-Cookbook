@@ -4,7 +4,7 @@ default[:kannel][:admin_port] = 13000
 default[:kannel][:admin_password] = '1234'
 default[:kannel][:status_password] = '1234'
 default[:kannel][:smsbox_port] = 13001
-default[:kannel][:admin_deny_ip] = ''
+default[:kannel][:admin_deny_ip] = '""'
 default[:kannel][:admin_allow_ip] = '*.*.*.*'
 default[:kannel][:bearerbox_log_file] = '/var/log/kannel/bearerbox.log'
 default[:kannel][:bearerbox_log_level] = 0
@@ -39,7 +39,7 @@ default[:kannel][:service_max_messages] = 0
 default[:kannel][:service_catchall] = 'yes'
 default[:kannel][:service_keyword] = 'default'
 
-default[:kannel][:smsc_address_range] = ''
+default[:kannel][:smsc_address_range] = '""'
 default[:kannel][:smsc_my_number] = 2424
 default[:kannel][:smsc_system_type] = 'VMA'
 default[:kannel][:smsc_username] = 'user'

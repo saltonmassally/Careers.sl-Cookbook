@@ -40,7 +40,8 @@ template "#{node[:kannel][:config_folder_path]}/smsc/africell.conf" do
 end
 
 template "#{node[:kannel][:config_folder_path]}/smsc/fake.conf" do
-  source "user-default.conf.erb"
+  source "user-
+lt.conf.erb"
   mode 0755
   owner "kannel"
   group "kannel"
@@ -81,7 +82,7 @@ template "#{node[:kannel][:config_folder_path]}/users/default.conf" do
   group "kannel"
 end
 
-template "#{node[:kannel][:config_folder_path]}/kannel" do
+template "/etc/default/kannel" do
   source "kannel.erb"
   mode 0755
   owner "kannel"
