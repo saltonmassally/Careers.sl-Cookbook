@@ -16,4 +16,7 @@ cookbook 'php'
 #cookbook 'varnish'
 cookbook 'postfix'
 cookbook 'ark'
+cookbook 'wkhtmltopdf'
+cookbook 'bluepill'
+cookbook 's3fs', git: 'git://github.com/sebgregoire/s3fs-recipe.git'
 

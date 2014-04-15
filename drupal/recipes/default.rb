@@ -7,24 +7,30 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe %w{apache2 apache2::mod_php5 apache2::mod_rewrite apache2::mod_expires}
-include_recipe %w{php php::module_mysql php::module_gd}
-include_recipe "postfix"
-include_recipe "drupal::drush"
-include_recipe "drupal::cron"
+include 'wkhtmltopdf'
 
-execute "disable-default-site" do
-   command "sudo a2dissite default"
-   notifies :reload, "service[apache2]", :delayed
-   only_if do File.exists? "#{node['apache']['dir']}/sites-enabled/default" end
+package "drush" do
+  action :install
 end
 
-cookbook_file "drupal" do
-  path "/etc/apache2/sites-available/drupal"
+
+php_pear "pdo" do
+  action :install
 end
 
-execute "a2ensite drupal" do
-  creates "/etc/apache2/sites-enabled/drupal"
-  notifies :restart, "service[apache2]"
+# Install APC for increased performance. rfc1867 support also provides minimal
+# feedback for file uploads.  Requires pcre library.
+php_pear "apc" do
+  directives(:shm_size => "70M", :rfc1867 => 1)
+  version "3.1.6" # TODO Somehow Chef PEAR/PECL provider causes debugging to be enabled on later builds.
+  action :install
 end
+
+# Install uploadprogress for better feedback during Drupal file uploads.
+php_pear "uploadprogress" do
+  action :install
+end
+
+
+
 

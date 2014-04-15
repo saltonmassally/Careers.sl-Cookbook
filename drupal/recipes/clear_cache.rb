@@ -1,8 +1,7 @@
-rightscale_marker :begin
 
-drupal "clear" do
-  directory node[:drupal][:base_dir]
-  action :clear_cache
+bash 'clear_cache' do
+  code <<-EOH
+    drush cache-clear
+    EOH
+  not_if { node['drupal']['dir'] }
 end
-
-rightscale_marker :end
