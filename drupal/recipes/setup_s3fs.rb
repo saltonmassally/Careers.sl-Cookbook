@@ -1,1 +1,1 @@
-include_receipe 's3fs-fuse'
+include_receipe 's3fs'
