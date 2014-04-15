@@ -7,6 +7,6 @@ override['postfix']['main']['relayhost'] = 'email-smtp.us-east-1.amazonaws.com:2
 override['postfix']['main']['mynetworks'] = '127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128'
 override['postfix']['sasl']['smtp_sasl_user_name'] = ''
 override['postfix']['sasl']['smtp_sasl_passwd'] = ''
-defualt['postfix']['main']['smtp_tls_security_level'] = 'encrypt'
-defualt['postfix']['main']['smtp_tls_note_starttls_offer'] = 'yes'
+override['postfix']['main']['smtp_tls_security_level'] = 'encrypt'
+override['postfix']['main']['smtp_tls_note_starttls_offer'] = 'yes'
 
