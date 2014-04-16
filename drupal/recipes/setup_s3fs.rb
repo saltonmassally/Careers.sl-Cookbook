@@ -1,1 +1,1 @@
-include_receipe 's3fs'
+include_recipe 's3fs'
