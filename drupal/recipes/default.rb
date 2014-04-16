@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include 'wkhtmltopdf'
+include_recipe 'wkhtmltopdf'
 
 package "drush" do
   action :install
