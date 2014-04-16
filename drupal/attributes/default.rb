@@ -9,5 +9,5 @@ default['drupal']['memcache']['port'] = 11211
 
 default['drupal']['hash_salt'] = ''
 
-override['s3fs']['buckets']['careers-sl']['access_key_id'] = ''
-override['s3fs']['buckets']['careers-sl']['secret_access_key'] = ''
+override['s3fs']['buckets']['careers-sl']['access_key_id'] = 'secret'
+override['s3fs']['buckets']['careers-sl']['secret_access_key'] = 'secret'
