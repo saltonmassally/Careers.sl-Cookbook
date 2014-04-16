@@ -13,7 +13,7 @@ package "drush" do
   action :install
 end
 
-package "php_apc" do
+package "php-apc" do
   action :install
 end
 
