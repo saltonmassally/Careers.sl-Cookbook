@@ -17,6 +17,7 @@ cookbook 'php'
 cookbook 'postfix'
 cookbook 'ark'
 cookbook 'wkhtmltopdf'
-cookbook 'bluepill'
+cookbook 'cron'
 cookbook 's3fs', git: 'git://github.com/sebgregoire/s3fs-recipe.git'
+
 
