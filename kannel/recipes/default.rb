@@ -82,7 +82,7 @@ template "#{node[:kannel][:config_folder_path]}/users/default.conf" do
 end
 
 template "/etc/default/kannel" do
-  source "kannel.erb"
+  source "kannel.default.erb"
   mode 0755
   owner "kannel"
   group "kannel"
