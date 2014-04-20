@@ -7,7 +7,7 @@
 
   <Directory <%= @params[:docroot] %>>
     Options FollowSymLinks
-    AllowOverride All
+    AllowOverride None
     Order allow,deny
     Allow from all
   </Directory>
@@ -30,6 +30,7 @@
   FileETag none
 
   RewriteEngine On
+  Include <%= @params[:docroot] %>.htaccess
   RewriteLog <%= node[:apache][:log_dir] %>/<%= @application_name %>-rewrite.log
   RewriteLogLevel 0
   
@@ -59,7 +60,7 @@
   
   <Directory <%= @params[:docroot] %>>
     Options FollowSymLinks
-    AllowOverride All
+    AllowOverride None
     Order allow,deny
     Allow from all
   </Directory>
@@ -89,7 +90,6 @@
   AliasMatch ^<%= @params[:mounted_at] %>/(.*)$ <%= @params[:docroot] %>$1
   <% end -%>
   
-
 </VirtualHost>
 <% end -%>
 
