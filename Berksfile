@@ -1,8 +1,6 @@
 site :opscode
 metadata
 cookbook 'apt'
-cookbook 'apache2'
-cookbook 'vim'
 cookbook 'build-essential'
 cookbook 'drush', git: 'https://github.com/msonnabaum/chef-drush'
 cookbook 'git'
