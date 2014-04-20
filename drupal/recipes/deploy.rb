@@ -5,7 +5,7 @@ include_recipe 'deploy'
 node[:deploy].each do |application, deploy|
 
   template "#{deploy[:deploy_to]}/sites/default/settings.php" do
-    source "settings.py.erb"
+    source "settings.php.erb"
     owner deploy[:user]
     group deploy[:group]
     action :create
