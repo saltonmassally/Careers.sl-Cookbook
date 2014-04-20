@@ -10,6 +10,7 @@
     AllowOverride None
     Order allow,deny
     Allow from all
+    Include <%= @params[:docroot] %>.htaccess
   </Directory>
   
   <Directory ~ "\.svn">
@@ -29,8 +30,7 @@
 
   FileETag none
 
-  RewriteEngine On
-  Include <%= @params[:docroot] %>.htaccess
+  RewriteEngine On  
   RewriteLog <%= node[:apache][:log_dir] %>/<%= @application_name %>-rewrite.log
   RewriteLogLevel 0
   
