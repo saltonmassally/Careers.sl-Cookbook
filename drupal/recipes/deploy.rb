@@ -20,7 +20,7 @@ node[:deploy].each do |application, deploy|
 
   bash "update_db" do
     user deploy[:user]
-    cwd deploy[:deploy_to]
+    cwd "#{deploy[:deploy_to]}/current"
     code <<-EOH
     drush updatedb
     EOH

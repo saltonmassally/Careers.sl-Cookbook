@@ -214,10 +214,10 @@ $databases = array (
   array (
     'default' => 
     array (
-      'database' => node['drupal']['database']['name'],
-      'username' => node['drupal']['database']['username'],
-      'password' => node['drupal']['database']['password'],
-      'host' => node['drupal']['database']['host'],
+      'database' => <%= node['drupal']['database']['name']%>,
+      'username' => <%= node['drupal']['database']['username']%>,
+      'password' => <%= node['drupal']['database']['password']%>,
+      'host' => <%= node['drupal']['database']['host']%>,
       'port' => '',
       'driver' => 'mysql',
       'prefix' => '',
@@ -255,7 +255,7 @@ $update_free_access = FALSE;
  *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
  *
  */
-$drupal_hash_salt = node['drupal']['hash_salt'];
+$drupal_hash_salt = <%= node['drupal']['hash_salt']%>;
 
 /**
  * Base URL (optional).
@@ -277,7 +277,7 @@ $drupal_hash_salt = node['drupal']['hash_salt'];
  * It is not allowed to have a trailing slash; Drupal will add it
  * for you.
  */
-$base_url = node['drupal']['base_url'];  // NO trailing slash!
+$base_url = <%= node['drupal']['base_url']%>;  // NO trailing slash!
 
 /**
  * PHP settings:
@@ -574,7 +574,7 @@ $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
 $conf['memcache_key_prefix'] = 'careers_sl_drupal';
 
 $conf['memcache_servers'] = array(
-  node['drupal']['memcache']['host']:node['drupal']['memcache']['port'] => 'default',
+  <%= node['drupal']['memcache']['host']%>:<%= node['drupal']['memcache']['port']%> => 'default',
 );
 $conf['memcache_bins'] = array(
   'cache' => 'default',

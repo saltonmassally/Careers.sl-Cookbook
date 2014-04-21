@@ -8,4 +8,5 @@ default['drupal']['memcache']['host'] = ''
 default['drupal']['memcache']['port'] = 11211
 
 default['drupal']['hash_salt'] = ''
+default['drupal']['base_url'] = ''
 
