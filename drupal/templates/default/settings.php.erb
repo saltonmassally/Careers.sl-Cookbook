@@ -574,7 +574,7 @@ $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
 $conf['memcache_key_prefix'] = 'careers_sl_drupal';
 
 $conf['memcache_servers'] = array(
-  '<%= node['drupal']['memcache']['host']%>':'<%= node['drupal']['memcache']['port']%>' => 'default',
+  '<%= node['drupal']['memcache']['host']%>:<%= node['drupal']['memcache']['port']%>' => 'default',
 );
 $conf['memcache_bins'] = array(
   'cache' => 'default',
