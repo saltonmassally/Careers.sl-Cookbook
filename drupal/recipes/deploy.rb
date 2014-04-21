@@ -4,7 +4,7 @@ include_recipe 'deploy'
 
 node[:deploy].each do |application, deploy|
 
-  template "#{deploy[:deploy_to]}/sites/default/settings.php" do
+  template "#{deploy[:deploy_to]}/current/sites/default/settings.php" do
     source "settings.php.erb"
     owner deploy[:user]
     group deploy[:group]
@@ -12,7 +12,7 @@ node[:deploy].each do |application, deploy|
   end
  
   cron "drupal_cron" do
-    command "cd #{deploy[:deploy_to]}; /usr/bin/php cron.php"
+    command "cd #{deploy[:deploy_to]}/current; /usr/bin/php cron.php"
     minute "*/15"
     only_if  { File.exist?("#{deploy[:deploy_to]}/cron.php") }
   end
