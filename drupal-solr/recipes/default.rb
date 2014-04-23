@@ -10,14 +10,13 @@ ark "solr_war-#{node['drupal-solr']['solr_version']}" do
   owner node['drupal-solr']['tomcat_user']
 end
 
-remote_directory node['drupal-solr']['tomcat_lib_dir']  do
-  files_mode "755"
-  files_group node['drupal-solr']['tomcat_group']	
-  files_owner node['drupal-solr']['tomcat_user']
-  mode "755"
-  owner node['drupal-solr']['tomcat_user']
-  source "file:///usr/local/solr-#{node['drupal-solr']['solr_version']}/dist/solrj-lib"
-  group node['drupal-solr']['tomcat_group']
+bash "copy_source" do
+    code <<-EOH
+    cp -r /usr/local/solr-#{node['drupal-solr']['solr_version']}/dist/solrj-lib #{node['drupal-solr']['tomcat_lib_dir']}
+    chown -R #{node['drupal-solr']['tomcat_user']} #{node['drupal-solr']['tomcat_lib_dir']}
+    chgrp -R #{node['drupal-solr']['tomcat_group']} #{node['drupal-solr']['tomcat_lib_dir']}
+    chmod -R 755 #{node['drupal-solr']['tomcat_lib_dir']}
+    EOH
 end
 
 
