@@ -6,12 +6,6 @@ aws_ebs_volume "drupal_data_volume" do
   action :attach
 end
 
-directory node[:drupal][:ebs][:mount_point] do
-   mode '0755'
-   owner deploy[:user]
-   group deploy[:group]
-   recursive true
- end
 
 mount node[:drupal][:ebs][:mount_point] do
   device node[:drupal][:ebs][:device]

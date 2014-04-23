@@ -11,6 +11,13 @@ node[:deploy].each do |application, deploy|
      EOH
    end
 
+   directory node[:drupal][:ebs][:mount_point] do
+      mode '0755'
+      owner deploy[:user]
+      group deploy[:group]
+      recursive true
+   end
+
    link node[:drupal][:ebs][:mount_point] do
      owner deploy[:user]
      group deploy[:group]
