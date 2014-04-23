@@ -4,7 +4,7 @@
 
 
 # Extract war file from solr archive
-ark 'solr_war' do
+ark "solr_war-#{node['drupal-solr']['solr_version']}" do
   url node['drupal-solr']['url']
   action :put
   owner node['drupal-solr']['tomcat_user']

@@ -18,5 +18,5 @@ cookbook 'wkhtmltopdf'
 cookbook 'cron'
 cookbook 'aws'
 cookbook 's3fs', git: 'git://github.com/sebgregoire/s3fs-recipe.git'
-
-
+cookbook 'application'
+cookbook 'application_python'
