@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 ec2-expire-snapshots \
---keep-first-daily node[:chef_ec2_ebs_snapshot][:ec2_expire_snapshot][:keep_first_daily] \
---keep-first-monthly node[:chef_ec2_ebs_snapshot][:ec2_expire_snapshot][:keep_first_monthly] \
---keep-most-recent node[:chef_ec2_ebs_snapshot][:ec2_expire_snapshot][:keep_most_recent] \
---aws-access-key-id "#{node[:chef_ec2_ebs_snapshot][:aws_access_id]}" \
---aws-secret-access-key  "#{node[:chef_ec2_ebs_snapshot][:aws_secret_access_key]}" \
---region "#{node[:chef_ec2_ebs_snapshot]['region']}" \
-node[:chef_ec2_ebs_snapshot][:volume_id]
+--keep-first-daily <%= node[:chef_ec2_ebs_snapshot][:ec2_expire_snapshot][:keep_first_daily] %> \
+--keep-first-monthly <%= node[:chef_ec2_ebs_snapshot][:ec2_expire_snapshot][:keep_first_monthly] %> \
+--keep-most-recent <%= node[:chef_ec2_ebs_snapshot][:ec2_expire_snapshot][:keep_most_recent] %> \
+--aws-access-key-id "<%= node[:chef_ec2_ebs_snapshot][:aws_access_id] %>" \
+--aws-secret-access-key  "<%= node[:chef_ec2_ebs_snapshot][:aws_secret_access_key] %>" \
+--region "<%= node[:chef_ec2_ebs_snapshot]['region'] %>" \
+<%= node[:chef_ec2_ebs_snapshot][:volume_id] %>

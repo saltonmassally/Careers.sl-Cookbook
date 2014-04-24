@@ -18,6 +18,14 @@ node[:deploy].each do |application, deploy|
       recursive true
    end
 
+   directory "#{deploy[:absolute_document_root]}sites/default/files" do
+      mode '0755'
+      owner deploy[:user]
+      group deploy[:group]
+      recursive true
+   end
+
+
    link node[:drupal][:ebs][:mount_point] do
      owner deploy[:user]
      group deploy[:group]
@@ -37,7 +45,6 @@ node[:deploy].each do |application, deploy|
   cron "drupal_cron" do
     command "cd #{deploy[:absolute_document_root]}; /usr/bin/php cron.php"
     minute "*/15"
-    only_if  { File.exist?("#{deploy[:deploy_to]}/cron.php") }
   end
 
 

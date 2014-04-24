@@ -1,17 +1,378 @@
-'''
-Created on Jul 15, 2013
+# Django settings for careers_sms project.
 
-@author: "Salton Massally"
-'''
+import os
+import djcelery
+djcelery.setup_loader()
 
-from platform import node
+# set aws variables
+AWS_ACCESS_KEY_ID = "<%=node[:smssuite][:sqs][:AWS_ACCESS_KEY_ID]%>"
+AWS_SECRET_ACCESS_KEY = "<%=node[:smssuite][:sqs][:AWS_SECRET_ACCESS_KEY]%>"
+os.environ.setdefault("AWS_ACCESS_KEY_ID", AWS_ACCESS_KEY_ID)
+os.environ.setdefault("AWS_SECRET_ACCESS_KEY", AWS_SECRET_ACCESS_KEY)
 
-from settings_common import *
 
-if node() in DEVELOPMENT_HOSTS:
-    from settings_development import *
-elif node() in PRODUCTION_HOSTS:
-    from settings_production import *
-else:
-    raise Exception("Cannot determine execution mode for host '%s'. Please check DEVELOPMENT_HOST and PRODUCTION_HOST in settings_local.py." % node())
+# The top directory for this project. Contains requirements/, manage.py,
+# and README.rst, a careers_sms directory with settings etc (see
+# PROJECT_PATH), as well as a directory for each Django app added to this
+# project.
+PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
+
+# The directory with this project's templates, settings, urls, static dir,
+# wsgi.py, fixtures, etc.
+PROJECT_PATH = os.path.join(PROJECT_ROOT, 'careers_sms')
+
+
+ADMINS = (
+    ('Salton Massally', 'salton.massally@gmail.com'),
+)
+
+MANAGERS = ADMINS
+
+
+# Local time zone for this installation. Choices can be found here:
+# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# although not all choices may be available on all operating systems.
+# In a Windows environment this must be set to your system time zone.
+TIME_ZONE = 'Africa/Freetown'
+
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+LANGUAGE_CODE = 'en-gb'
+
+SITE_ID = 1
+
+# If you set this to False, Django will make some optimizations so as not
+# to load the internationalization machinery.
+USE_I18N = False
+
+# If you set this to False, Django will not format dates, numbers and
+# calendars according to the current locale.
+USE_L10N = True
+
+# If you set this to False, Django will not use timezone-aware datetimes.
+USE_TZ = True
+
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/public/media/"
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'public', 'media')
+
+# URL that handles the media served from MEDIA_ROOT. Make sure to use a
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
+MEDIA_URL = '/media/'
+
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/home/media/media.lawrence.com/public/static/"
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'public', 'static')
+
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+STATIC_URL = '/static/'
+
+# Additional locations of static files to collect
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_PATH, 'static'),
+)
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = "<%=node[:smssuite][:secret_key]%>"
+
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    # 'django.template.loaders.eggs.Loader',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.media',
+    'django.core.context_processors.request',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.static',
+)
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+ROOT_URLCONF = 'careers_sms.urls'
+
+# Python dotted path to the WSGI application used by Django's runserver.
+WSGI_APPLICATION = 'careers_sms.wsgi.application'
+
+TEMPLATE_DIRS = (
+    os.path.join(PROJECT_PATH, 'templates'),
+)
+
+FIXTURE_DIRS = (
+    os.path.join(PROJECT_PATH, 'fixtures'),
+)
+
+# A sample logging configuration.
+# This logs all rapidsms messages to the file `rapidsms.log`
+# in the project directory.  It also sends an email to
+# the site admins on every HTTP 500 error when DEBUG=False.
+# See http://docs.djangoproject.com/en/dev/topics/logging for
+# more details on how to customize your logging configuration.
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'root': {
+        'level': 'WARNING',
+        'handlers': ['sentry'],
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'formatters': {
+        'basic': {
+            'format': '%(asctime)s %(name)-20s %(levelname)-8s %(message)s',
+        },
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'basic',
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'basic',
+            'filename': os.path.join(PROJECT_PATH, 'rapidsms.log'),
+        },
+        'celery-file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'basic',
+            'filename': os.path.join(PROJECT_PATH, 'celery.log'),
+        },
+        'sentry': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins', 'sentry'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'rapidsms': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'careers_sms': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': True,
+        },
+        'raven': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'rapidsms.router.celery': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.admin',
+    # External apps
+    "django_nose",
+    #"djtables",  # required by rapidsms.contrib.locations
+    "django_tables2",
+    "selectable",
+    "djcelery",
+    "south",
+    "raven.contrib.django.raven_compat",
+    # RapidSMS
+    "rapidsms",
+    'kombu.transport.django',
+    "careers_sms.libs.contrib.rapidsms-stringcleaning-app",
+    "rapidsms.router.db",
+    "rapidsms.contrib.handlers",
+    "rapidsms.contrib.httptester",
+    "rapidsms.contrib.messagelog",
+    "rapidsms.backends.database",
+    #"rapidsms.contrib.messaging",
+    #"rapidsms.contrib.registration",
+    #"rapidsms.contrib.echo",
+    "gunicorn",
+    # Careers SMS
+    "careers_sms.apps.applybysms",
+    "careers_sms.apps.jobsbysms",
+    "careers_sms.apps.jobsbysms.notify",
+    "careers_sms.apps.jobsbysms.search",    
+    "rapidsms.contrib.default",  # Must be last
+)
+
+
+RAVEN_CONFIG = {
+    'dsn': '<%=[:smssuite][:raven_dns]}',
+}
+
+DEFAULT_FROM_EMAIL = 'developer@careers.sl'
+
+ERROR_MSG = 'Sorry, something went wrong whilst processing your request; we are resolving it, please try again at a latter'
+
+SHORT_CODE = 2424
+
+INSTALLED_BACKENDS = {
+    "message_tester": {
+        "ENGINE": "rapidsms.backends.database.DatabaseBackend",
+    },
+    "kannel" : {
+        "ENGINE":  "rapidsms.backends.kannel.KannelBackend",
+        "sendsms_url": "<%=node[:smssuite][:backend][:kannel][:sendsms_url]%>",
+        "sendsms_params": {"smsc": "<%=node[:smssuite][:backend][:kannel][:sendsms_params][:smsc]%>",
+                           "from": node[:smssuite][:backend][:kannel][:sendsms_params][:from],
+                           "username": "<%=node[:smssuite][:backend][:kannel][:sendsms_params][:username]%>",
+                           "password": "<%=node[:smssuite][:backend][:kannel][:sendsms_params][:password]%>"},
+        "coding": 0,
+        "charset": "ascii",
+        "encode_errors": "ignore",
+    },
+}
+
+LOGIN_REDIRECT_URL = '/'
+
+RAPIDSMS_HANDLERS = (
+    'rapidsms.contrib.echo.handlers.echo.EchoHandler',
+    'rapidsms.contrib.echo.handlers.ping.PingHandler',
+    'careers_sms.apps.jobsbysms.handlers.ReloadPastResultsHandler',
+    'careers_sms.libs.handlers.HelpHandler',
+)
+
+# careers_sms custom additions
+
+DEFAULT_RESPONSE = "Sorry, %(project_name)s could not understand your message. Send HELP to get a list of valid commands."
+
+PROJECT_NAME = "Careers.sl"
+
+
+SMS_LINE_END = '; \r\n'
+
+SMS_LENGTH = 160
+
+
+NOTIFY_SAVED_SEARCH_LIMIT = 4
+
+DEBUG = False
+
+TEMPLATE_DEBUG = DEBUG
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '<%=node[:smssuite][:database][:name]%>',
+        'USER': '<%=node[:smssuite][:database][:user]%>',
+        'PASSWORD': '<%=node[:smssuite][:database][:password]%>',
+        'HOST': '<%=node[:smssuite][:database][:host]%>',
+        'PORT': '3306',
+    }
+}
+
+
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '<%=node[:smssuite][:cache][:location]%>',
+        'TIMEOUT': 3600
+    }
+}
+
+
+# celery
+BROKER_BACKEND = "SQS"
+BROKER_TRANSPORT_OPTIONS = {
+    'region': 'eu-west-1',
+}
+BROKER_URL = 'sqs://'
+
+CELERY_CACHE_BACKEND = 'memcached://<%=node[:smssuite][:cache][:location]%>/'
+CELERY_DEFAULT_QUEUE = 'careers-sl-smssuite'
+CELERY_DEFAULT_EXCHANGE = CELERY_DEFAULT_QUEUE
+CELERY_DEFAULT_EXCHANGE_TYPE = CELERY_DEFAULT_QUEUE
+CELERY_DEFAULT_ROUTING_KEY = CELERY_DEFAULT_QUEUE
+CELERY_QUEUES = {
+    CELERY_DEFAULT_QUEUE: {
+        'exchange': CELERY_DEFAULT_QUEUE,
+        'binding_key': CELERY_DEFAULT_QUEUE,
+    }
+}
+
+RAPIDSMS_ROUTER = "rapidsms.router.db.DatabaseRouter"
+
+CAREERS_SMS_BACKEND = 'kannel'
+
+ALLOWED_HOSTS = [
+  '54.244.251.215',
+  '10.254.40.177',
+  '10.255.16.238',
+  '10.254.87.198',
+  'ip-10-254-87-198.us-west-2.compute.internal',
+]
+
+# between what times should users be considered asleep 
+# see https://github.com/pboyd/TimePeriod & http://search.cpan.org/~pryan/Period-1.20/Period.pm
+SLEEP_TIME = "hour { 8pm-9am }"
+
+
+# email settings
+DEFAULT_FROM_EMAIL = 'developer@careers.sl'
+
+SERVER_EMAIL = 'developer@careers.sl'
+
+CAREERS_API_CONNECTION = {
+    'host' : 'http://www.careers.sl/api/1.0/',                       
+}
+
+CAREERS_URL = 'http://www.careers.sl/'
 
