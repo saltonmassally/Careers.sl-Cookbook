@@ -1,17 +1,6 @@
 include_recipe 'deploy'
 
-node[:deploy].each do |application, deploy|
-
-  opsworks_deploy_dir do
-    user deploy[:user]
-    group deploy[:group]
-    path deploy[:deploy_to]
-  end
-
-  opsworks_deploy do
-    deploy_data deploy
-    app application
-  end
+node[:deploy].each do |deploy_application, deploy|
 
   application "smssuite" do
      name 'smssuite'
