@@ -4,7 +4,7 @@
 
 
 # Extract war file from solr archive
-ark "solr_war-#{node['drupal-solr']['solr_version']}" do
+ark "solr-#{node['drupal-solr']['solr_version']}" do
   url node['drupal-solr']['url']
   action :put
   owner node['drupal-solr']['tomcat_user']
@@ -12,10 +12,7 @@ end
 
 bash "copy_source" do
     code <<-EOH
-    cp -r /usr/local/solr-#{node['drupal-solr']['solr_version']}/dist/solrj-lib #{node['drupal-solr']['tomcat_lib_dir']}
-    chown -R #{node['drupal-solr']['tomcat_user']} #{node['drupal-solr']['tomcat_lib_dir']}
-    chgrp -R #{node['drupal-solr']['tomcat_group']} #{node['drupal-solr']['tomcat_lib_dir']}
-    chmod -R 755 #{node['drupal-solr']['tomcat_lib_dir']}
+    cp -r /usr/local/solr-#{node['drupal-solr']['solr_version']}/dist/solrj-lib/* #{node['drupal-solr']['tomcat_lib_dir']}
     EOH
 end
 

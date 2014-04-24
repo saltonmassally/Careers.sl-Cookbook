@@ -7,7 +7,3 @@ service 'nginx' do
   action :start
 end
 
-package "enchant" do
-  action :install
-end
-

@@ -7,11 +7,12 @@ bash "update_db" do
     code <<-EOH
     add-apt-repository ppa:alestic 
     apt-get update
-    apt-get install ec2-consistent-snapshot 
-    apt-get install ec2-expire-snapshots
     EOH
-  end
+end
 
+package 'ec2-consistent-snapshot'
+
+package 'ec2-expire-snapshot'
 
 template "/usr/bin/snapshot_create.sh" do
   source "snapshot_create.sh.erb"
