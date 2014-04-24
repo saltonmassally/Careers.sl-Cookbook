@@ -3,7 +3,7 @@
 # Recipe:: default
 #
 
-bash "update_db" do
+bash "update_ppa" do
     code <<-EOH
     add-apt-repository ppa:alestic 
     apt-get update
