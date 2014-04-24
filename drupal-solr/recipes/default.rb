@@ -11,9 +11,10 @@ ark "solr-#{node['drupal-solr']['solr_version']}" do
 end
 
 bash "copy_source_1" do
+    user node['drupal-solr']['tomcat_user']
+    group node['drupal-solr']['tomcat_group']
     code <<-EOH
     cp -r /usr/local/solr-#{node['drupal-solr']['solr_version']}/dist/solrj-lib/* #{node['drupal-solr']['tomcat_lib_dir']}
-    chown -R #{node['drupal-solr']['tomcat_user']}:#{node['drupal-solr']['tomcat_group']} #{node['drupal-solr']['tomcat_lib_dir']}
     EOH
 end
 
@@ -47,9 +48,10 @@ directory "#{node['drupal-solr']['solr_home']}/conf" do
 end
 
 bash "copy_source_2" do
+    user node['drupal-solr']['tomcat_user']
+    group node['drupal-solr']['tomcat_group']
     code <<-EOH
     cp -r /usr/local/solr-#{node['drupal-solr']['solr_version']}/example/solr/collection1/conf/* #{node['drupal-solr']['solr_home']}/conf
-    chown -R #{node['drupal-solr']['tomcat_user']}:#{node['drupal-solr']['tomcat_group']} #{node['drupal-solr']['tomcat_lib_dir']}
     EOH
 end
 
@@ -91,9 +93,10 @@ end
 end
 
 bash "copy_source_3" do
+    user node['drupal-solr']['tomcat_user']
+    group node['drupal-solr']['tomcat_group']
     code <<-EOH
     cp -r #{node['drupal-solr']['solr_home']}/conf/* #{node['drupal-solr']['solr_home']}/drupal
-    chown -R #{node['drupal-solr']['tomcat_user']}:#{node['drupal-solr']['tomcat_group']} #{node['drupal-solr']['solr_home']}/drupal}
     EOH
 end
 
