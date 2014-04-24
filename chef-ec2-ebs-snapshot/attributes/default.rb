@@ -1,5 +1,5 @@
 default[:chef_ec2_ebs_snapshot][:description] = "Database Backup $(date +'%Y-%m-%d %H:%M:%S')"
-default[:chef_ec2_ebs_snapshot][:region] = 'eu-west-1a'
+default[:chef_ec2_ebs_snapshot][:region] = 'eu-west-1'
 default[:chef_ec2_ebs_snapshot][:aws_access_id] = 'secret'
 default[:chef_ec2_ebs_snapshot][:aws_secret_access_key] = 'secret'
 default[:chef_ec2_ebs_snapshot][:volume_id] = ''

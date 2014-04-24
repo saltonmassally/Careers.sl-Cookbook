@@ -18,19 +18,11 @@ node[:deploy].each do |application, deploy|
       recursive true
    end
 
-   directory "#{deploy[:absolute_document_root]}sites/default/files" do
-      mode '0755'
-      owner deploy[:user]
-      group deploy[:group]
-      recursive true
-   end
-
 
    link node[:drupal][:ebs][:mount_point] do
      owner deploy[:user]
      group deploy[:group]
      to "#{deploy[:absolute_document_root]}sites/default/files"
-     not_if "test -e  #{node[:drupal][:ebs][:mount_point]}"
    end	
 
 
