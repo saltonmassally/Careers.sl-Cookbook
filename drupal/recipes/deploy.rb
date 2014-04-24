@@ -19,10 +19,10 @@ node[:deploy].each do |application, deploy|
    end
 
 
-   link node[:drupal][:ebs][:mount_point] do
+   link "#{deploy[:absolute_document_root]}sites/default/files" do
      owner deploy[:user]
      group deploy[:group]
-     to "#{deploy[:absolute_document_root]}sites/default/files"
+     to node[:drupal][:ebs][:mount_point] 
    end	
 
 
