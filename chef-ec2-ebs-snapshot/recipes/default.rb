@@ -12,7 +12,7 @@ end
 
 package 'ec2-consistent-snapshot'
 
-package 'ec2-expire-snapshot'
+package 'ec2-expire-snapshots'
 
 template "/usr/bin/snapshot_create.sh" do
   source "snapshot_create.sh.erb"

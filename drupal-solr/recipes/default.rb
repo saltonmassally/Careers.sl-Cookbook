@@ -10,7 +10,7 @@ ark "solr-#{node['drupal-solr']['solr_version']}" do
   owner node['drupal-solr']['tomcat_user']
 end
 
-bash "copy_source" do
+bash "copy_source_1" do
     code <<-EOH
     cp -r /usr/local/solr-#{node['drupal-solr']['solr_version']}/dist/solrj-lib/* #{node['drupal-solr']['tomcat_lib_dir']}
     EOH
@@ -38,14 +38,10 @@ directory node['drupal-solr']['solr_home'] do
   recursive true
 end
 
-remote_directory node['drupal-solr']['tomcat_lib_dir']  do
-  files_mode "755"
-  files_group node['drupal-solr']['tomcat_group']	
-  files_owner node['drupal-solr']['tomcat_user']
-  mode "755"
-  owner node['drupal-solr']['tomcat_user']
-  source "file:///usr/local/solr-#{node['drupal-solr']['solr_version']}/example/solr/collection1/conf"
-  group node['drupal-solr']['tomcat_group']
+bash "copy_source_1" do
+    code <<-EOH
+    cp -r /usr/local/solr-#{node['drupal-solr']['solr_version']}/example/solr/collection1/conf/* #{node['drupal-solr']['tomcat_lib_dir']}
+    EOH
 end
 
 
@@ -62,14 +58,10 @@ directory "#{node['drupal-solr']['solr_home']}/drupal}" do
   recursive true
 end
 
-remote_directory "#{node['drupal-solr']['solr_home']}/drupal}"  do
-  files_mode "755"
-  files_group node['drupal-solr']['tomcat_group']	
-  files_owner node['drupal-solr']['tomcat_user']
-  mode "755"
-  owner node['drupal-solr']['tomcat_user']
-  source "file://#{node['drupal-solr']['solr_home']}/conf"
-  group node['drupal-solr']['tomcat_group']
+bash "copy_source_1" do
+    code <<-EOH
+    cp -r #{node['drupal-solr']['solr_home']}/conf/* #{node['drupal-solr']['solr_home']}/drupal}
+    EOH
 end
 
 [ 
