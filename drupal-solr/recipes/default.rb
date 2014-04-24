@@ -38,7 +38,14 @@ directory node['drupal-solr']['solr_home'] do
   recursive true
 end
 
-bash "copy_source_1" do
+directory "#{node['drupal-solr']['solr_home']}/conf" do
+  owner node['drupal-solr']['tomcat_user']
+  group node['drupal-solr']['tomcat_group']
+  mode 0755
+  recursive true
+end
+
+bash "copy_source_2" do
     code <<-EOH
     cp -r /usr/local/solr-#{node['drupal-solr']['solr_version']}/example/solr/collection1/conf/* #{node['drupal-solr']['tomcat_lib_dir']}
     EOH
@@ -51,18 +58,13 @@ template "#{node['drupal-solr']['tomcat_conf_dir']}/Catalina/localhost/solr_cont
   source "solr_context.xml.erb"
 end
 
-directory "#{node['drupal-solr']['solr_home']}/drupal}" do
+directory "#{node['drupal-solr']['solr_home']}/drupal" do
   owner node['drupal-solr']['tomcat_user']
   group node['drupal-solr']['tomcat_group']
   mode 0755
   recursive true
 end
 
-bash "copy_source_1" do
-    code <<-EOH
-    cp -r #{node['drupal-solr']['solr_home']}/conf/* #{node['drupal-solr']['solr_home']}/drupal}
-    EOH
-end
 
 [ 
    'elevate.xml',
@@ -84,6 +86,12 @@ end
     group node['drupal-solr']['tomcat_group']
     mode 0755
   end
+end
+
+bash "copy_source_3" do
+    code <<-EOH
+    cp -r #{node['drupal-solr']['solr_home']}/conf/* #{node['drupal-solr']['solr_home']}/drupal}
+    EOH
 end
 
 template "#{node['drupal-solr']['solr_home']}/solr.xml}" do
