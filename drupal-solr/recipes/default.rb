@@ -2,7 +2,8 @@
 ## Recipe:: install_solr
 ##
 
-
+include_recipe 'apache2::service'
+include_recipe 'apache2::service'
 # Extract war file from solr archive
 ark "solr-#{node['drupal-solr']['solr_version']}" do
   url node['drupal-solr']['url']
@@ -109,4 +110,95 @@ template "#{node['drupal-solr']['solr_home']}/solr.xml" do
   source 'drupal_context.xml.erb'
 end
 
+
+
+
+web_app deploy[:application] do
+    docroot deploy[:absolute_document_root]
+    server_name deploy[:domains].first
+    unless deploy[:domains][1, deploy[:domains].size].empty?
+      server_aliases deploy[:domains][1, deploy[:domains].size]
+    end
+    mounted_at deploy[:mounted_at]
+    ssl_certificate_ca deploy[:ssl_certificate_ca]
+    if application == 'root'
+      target_context ''
+    else
+      target_context "#{application}/"
+    end
+  end
+
+  template "#{node[:apache][:dir]}/ssl/#{deploy[:domains].first}.crt" do
+    mode 0600
+    source 'ssl.key.erb'
+    variables :key => deploy[:ssl_certificate]
+    notifies :restart, "service[apache2]"
+    only_if do
+      deploy[:ssl_support]
+    end
+  end
+
+  template "#{node[:apache][:dir]}/ssl/#{deploy[:domains].first}.key" do
+    mode 0600
+    source 'ssl.key.erb'
+    variables :key => deploy[:ssl_certificate_key]
+    notifies :restart, "service[apache2]"
+    only_if do
+      deploy[:ssl_support]
+    end
+  end
+
+  template "#{node[:apache][:dir]}/ssl/#{deploy[:domains].first}.ca" do
+    mode 0600
+    source 'ssl.key.erb'
+    variables :key => deploy[:ssl_certificate_ca]
+    notifies :restart, "service[apache2]"
+    only_if do
+      deploy[:ssl_support] && deploy[:ssl_certificate_ca]
+    end
+  end
+
+  # move away default virtual host so that the new app becomes the default virtual host
+  execute 'mv away default virtual host' do
+    action :run
+    command "mv #{node[:apache][:dir]}/sites-enabled/000-default \
+#{node[:apache][:dir]}/sites-enabled/zzz-default"
+    notifies :reload, "service[apache2]", :delayed
+    only_if do
+      ::File.exists?("#{node[:apache][:dir]}/sites-enabled/000-default")
+    end
+  end
+
+end
+
+include_recipe 'opsworks_java::context'
+
+
+include_recipe "opsworks_java::#{node['opsworks_java']['java_app_server']}_service"
+
+node[:deploy].each do |application, deploy|
+  if deploy[:application_type] != 'java'
+    Chef::Log.debug("Skipping deploy::java application #{application} as it is not a Java app")
+    next
+  end
+
+  # ROOT has a special meaning and has to be capitalized
+  if application == 'root'
+    webapp_name = 'ROOT'
+  else
+    webapp_name = application
+  end
+
+  template "context file for #{webapp_name}" do
+    path ::File.join(node['opsworks_java'][node['opsworks_java']['java_app_server']]['context_dir'], "#{webapp_name}.xml")
+    source 'webapp_context.xml.erb'
+    owner node['opsworks_java'][node['opsworks_java']['java_app_server']]['user']
+    group node['opsworks_java'][node['opsworks_java']['java_app_server']]['group']
+    mode 0640
+    backup false
+    only_if { node['opsworks_java']['datasources'][application] }
+    variables(:resource_name => node['opsworks_java']['datasources'][application], :application => application)
+    notifies :restart, "service[#{node['opsworks_java']['java_app_server']}]"
+  end
+end
 

@@ -6,6 +6,17 @@ node[:deploy].each do |deploy_application, deploy|
      next
    end
 
+  opsworks_deploy_dir do
+    user deploy[:user]
+    group deploy[:group]
+    path deploy[:deploy_to]
+  end
+
+  opsworks_deploy do
+    deploy_data deploy
+    app application
+  end
+
    bash "install_requirements" do
     code <<-EOH
     pip install -r #{deploy[:absolute_document_root]}#{node[:smssuite][:requirement_file]}
