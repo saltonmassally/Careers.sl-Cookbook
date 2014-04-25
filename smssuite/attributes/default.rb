@@ -1,6 +1,5 @@
 default[:smssuite][:sqs][:AWS_ACCESS_KEY_ID] = 'secret'
 default[:smssuite][:sqs][:AWS_SECRET_ACCESS_KEY] = 'secret'
-default[:smssuite][:dev_host] = ''
 default[:smssuite][:secret_key] = 'secret'
 default[:smssuite][:raven_dns] = ''
 default[:smssuite][:requirement_file] = 'requirements/base.txt'

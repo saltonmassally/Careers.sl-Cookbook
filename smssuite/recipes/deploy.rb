@@ -22,13 +22,13 @@ node[:deploy].each do |deploy_application, deploy|
 
   bash "syncdb" do
     code <<-EOH
-    python #{deploy[:absolute_document_root]}manage.py syncdb
+    python #{deploy[:absolute_document_root]}manage.py syncdb --noinput
     EOH
   end
 
   bash "migratedb" do
     code <<-EOH
-    python #{deploy[:absolute_document_root]}manage.py migrate
+    python #{deploy[:absolute_document_root]}manage.py migrate --noinput
     EOH
   end
 
