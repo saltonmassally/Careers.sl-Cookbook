@@ -1,6 +1,6 @@
 include_recipe 'deploy'
 
-node[:deploy].each do |deploy_application, deploy|
+node[:deploy].each do |application, deploy|
    if deploy[:application_type] != 'other'
      Chef::Log.debug("Skipping deploy::other application #{application} as it is not an other app")
      next
