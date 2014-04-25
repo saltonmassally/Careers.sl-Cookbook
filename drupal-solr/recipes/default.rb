@@ -93,7 +93,7 @@ end
 bash "copy_source_3" do
     code <<-EOH
     cp -r #{node['drupal-solr']['solr_home']}/conf/* #{node['drupal-solr']['solr_home']}/drupal
-    chown -R #{node['drupal-solr']['tomcat_user']}:#{node['drupal-solr']['tomcat_group']} #{node['drupal-solr']['solr_home']}/drupal}
+    chown -R #{node['drupal-solr']['tomcat_user']}:#{node['drupal-solr']['tomcat_group']} #{node['drupal-solr']['solr_home']}/drupal
     EOH
 end
 
