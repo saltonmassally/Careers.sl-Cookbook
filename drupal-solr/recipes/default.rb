@@ -48,7 +48,7 @@ end
 
 bash "copy_source_2" do
     code <<-EOH
-    cp -r /usr/local/solr-#{node['drupal-solr']['solr_version']}/example/solr/collection1/conf/* #{node['drupal-solr']['solr_home']}/conf
+    cp -r /usr/local/solr-#{node['drupal-solr']['solr_version']}/example/solr/collection1/conf/* #{node['drupal-solr']['solr_home']}
     chown -R #{node['drupal-solr']['tomcat_user']}:#{node['drupal-solr']['tomcat_group']} #{node['drupal-solr']['tomcat_lib_dir']}
     EOH
 end
