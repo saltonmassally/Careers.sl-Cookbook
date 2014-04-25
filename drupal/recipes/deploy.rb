@@ -11,21 +11,6 @@ node[:deploy].each do |application, deploy|
      EOH
    end
 
-   directory node[:drupal][:ebs][:mount_point] do
-      mode '0755'
-      owner deploy[:user]
-      group deploy[:group]
-      recursive true
-   end
-
-
-   link "#{deploy[:absolute_document_root]}sites/default/files" do
-     owner deploy[:user]
-     group deploy[:group]
-     to node[:drupal][:ebs][:mount_point] 
-   end	
-
-
   template "#{deploy[:absolute_document_root]}sites/default/settings.php" do
     source "settings.php.erb"
     owner deploy[:user]
@@ -39,6 +24,12 @@ node[:deploy].each do |application, deploy|
     minute "*/15"
   end
 
+   link "#{deploy[:absolute_document_root]}sites/default/files" do
+     owner deploy[:user]
+     group deploy[:group]
+     to node[:drupal][:ebs][:mount_point]
+     not_if { File.exist?("{deploy[:absolute_document_root]}sites/default/files") }
+   end	
 
   bash "update_db" do
     user deploy[:user]

@@ -90,6 +90,12 @@ end
   end
 end
 
+bash "change_permissiomn" do
+    code <<-EOH
+    chown -R #{node['drupal-solr']['tomcat_user']}:#{node['drupal-solr']['tomcat_group']} #{node['drupal-solr']['solr_home']}/conf
+    EOH
+end
+
 bash "copy_source_3" do
     code <<-EOH
     cp -r #{node['drupal-solr']['solr_home']}/conf/* #{node['drupal-solr']['solr_home']}/drupal
@@ -100,7 +106,7 @@ end
 template "#{node['drupal-solr']['solr_home']}/solr.xml" do
   owner node['drupal-solr']['tomcat_user']
   group node['drupal-solr']['tomcat_group']
-  source 'solr_context.xml.erb'
+  source 'drupal_context.xml.erb'
 end
 
 
