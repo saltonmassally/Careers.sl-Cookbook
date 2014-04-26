@@ -270,7 +270,7 @@ INSTALLED_BACKENDS = {
         "ENGINE":  "rapidsms.backends.kannel.KannelBackend",
         "sendsms_url": "<%=node[:smssuite][:backend][:kannel][:sendsms_url]%>",
         "sendsms_params": {"smsc": "<%=node[:smssuite][:backend][:kannel][:sendsms_params][:smsc]%>",
-                           "from": node[:smssuite][:backend][:kannel][:sendsms_params][:from],
+                           "from": "<%=node[:smssuite][:backend][:kannel][:sendsms_params][:from]%>,
                            "username": "<%=node[:smssuite][:backend][:kannel][:sendsms_params][:username]%>",
                            "password": "<%=node[:smssuite][:backend][:kannel][:sendsms_params][:password]%>"},
         "coding": 0,

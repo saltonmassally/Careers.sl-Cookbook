@@ -143,3 +143,9 @@ bash "install_init_script" do
     EOH
 end
 
+bash "restart_service" do
+    code <<-EOH
+       /etc/init.d/tomcat restart
+    EOH
+end
+
