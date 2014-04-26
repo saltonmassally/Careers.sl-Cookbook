@@ -7,12 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-package "openjdk-6-jdk" do
-  action :purge
-end
-
-
-package 'openjdk-7-jdk'
+include_receipe 'java'
 
 group node[:solr_drupal][:tomcat_group]
 

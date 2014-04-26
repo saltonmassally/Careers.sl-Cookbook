@@ -20,4 +20,4 @@ cookbook 's3fs', git: 'git://github.com/sebgregoire/s3fs-recipe.git'
 cookbook 'python'
 cookbook 'gunicorn'
 cookbook 'supervisor'
-
+cookbook 'java'

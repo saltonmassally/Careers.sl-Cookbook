@@ -12,3 +12,5 @@ default['solr_drupal']['tomcat_conf_dir'] = node['opsworks_java']['tomcat']['cat
 default['solr_drupal']['tomcat_webapp_dir'] = node['opsworks_java']['tomcat']['webapps_base_dir']
 default['solr_drupal']['tomcat_home'] = "/usr/share/tomcat#{node['opsworks_java']['tomcat']['base_version']}"
 default['solr_drupal']['solr_home'] = node['solr_drupal']['tomcat_home'] + "/solr"
+
+override['java']['jdk_version'] = 7

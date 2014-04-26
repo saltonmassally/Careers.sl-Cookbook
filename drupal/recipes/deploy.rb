@@ -3,6 +3,8 @@ include_recipe 'deploy'
 
 
 node[:deploy].each do |application, deploy|
+
+   include_recipe 'apache2::service'
    if deploy[:application_type] != 'php'
      Chef::Log.debug("Skipping deploy::php application #{application} as it is not an PHP app")
      next
@@ -27,6 +29,7 @@ node[:deploy].each do |application, deploy|
     source "php.ini.erb"
     mode "0644"
     action :create
+    notifies :restart, "service[apache2]"
   end
  
   cron "drupal_cron" do
@@ -46,6 +49,14 @@ node[:deploy].each do |application, deploy|
     cwd "#{deploy[:absolute_document_root]}"
     code <<-EOH
     drush updatedb
+    EOH
+  end
+
+  bash "update_db" do
+    user deploy[:user]
+    cwd "#{deploy[:absolute_document_root]}"
+    code <<-EOH
+    drush cc
     EOH
   end
 end
