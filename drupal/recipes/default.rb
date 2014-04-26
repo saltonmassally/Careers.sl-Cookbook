@@ -10,7 +10,7 @@
 include_recipe 'wkhtmltopdf'
 include_recipe 'varnish::apt_repo'
 include_recipe 'varnish'
-incluude_recipe 'memcached'
+include_recipe 'memcached'
 
 package "drush" do
   action :install
