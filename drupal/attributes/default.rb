@@ -30,3 +30,4 @@ override['varnish']['version'] = '3.0'
 override[:apache][:listen_ports] = [ '8080','443' ]
 override['varnish']['listen_port'] = 80
 override['varnish']['storage_size'] = '256M'
+override['varnish']['vcl_cookbook'] = 'drupal'

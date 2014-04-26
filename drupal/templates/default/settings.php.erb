@@ -571,18 +571,20 @@ $conf['memcache_stampede_protection'] = TRUE;
 $conf['cache_default_class'] = 'MemCacheDrupal';
 // The 'cache_form' bin must be assigned to non-volatile storage.
 $conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
-$conf['memcache_key_prefix'] = 'careers_sl_drupal';
 
-$conf['memcache_servers'] = array(
-  '<%= node['drupal']['memcache']['host']%>:<%= node['drupal']['memcache']['port']%>' => 'default',
-);
-$conf['memcache_bins'] = array(
-  'cache' => 'default',
-);
 
 $conf['cache_backends'][] = 'sites/all/modules/varnish/varnish.cache.inc';
 $conf['page_cache_invoke_hooks'] = FALSE;
 $conf['cache_class_cache_page'] = 'VarnishCache';  
+$conf['reverse_proxy'] = TRUE;
+$conf['cache'] = 1;
+$conf['cache_lifetime'] = 0;
+$conf['page_cache_maximum_age'] = 21600;
+$conf['reverse_proxy_header'] = 'HTTP_X_FORWARDED_FOR';
+$conf['reverse_proxy_addresses'] = array('127.0.0.1');
+$conf['omit_vary_cookie'] = TRUE;
+$conf['varnish_control_key'] = substr(file_get_contents('<%=node['varnish']['secret_file']%>'),0,-1);
+
 
 $conf['locale_custom_strings_en'][''] = array(
   'Sorry, unrecognized username or password. <a href="@password">Have you forgotten your password?</a>' => 'Sorry, unrecognized e-mail or password. <a href="@password">Have you forgotten your password?</a>',
