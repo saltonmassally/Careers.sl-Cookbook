@@ -10,6 +10,6 @@ version          "0.1.0"
   supports os
 end
 
-%w{ python gunicorn supervisor memcached }.each do |cb|
+%w{ python gunicorn supervisor memcached celery}.each do |cb|
   depends cb
 end
