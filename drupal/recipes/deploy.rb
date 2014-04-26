@@ -22,6 +22,12 @@ node[:deploy].each do |application, deploy|
     mode "0644"
     action :create
   end
+
+  template "/etc/php5/apache2/php.ini" do
+    source "php.ini.erb"
+    mode "0644"
+    action :create
+  end
  
   cron "drupal_cron" do
     command "cd #{deploy[:absolute_document_root]}; drush cron"
