@@ -7,7 +7,7 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_receipe 'java'
+include_recipe 'java'
 
 group node[:solr_drupal][:tomcat_group]
 
