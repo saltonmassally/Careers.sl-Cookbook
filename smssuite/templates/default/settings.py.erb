@@ -333,6 +333,7 @@ CACHES = {
 BROKER_BACKEND = "SQS"
 BROKER_TRANSPORT_OPTIONS = {
     'region': 'eu-west-1',
+    'queue_name_prefix': 'smssuite-'
 }
 BROKER_URL = 'sqs://'
 
