@@ -12,7 +12,6 @@ node[:deploy].each do |application, deploy|
 
    bash "change_owner" do
      code <<-EOH
-        user = "root"
         chown -R #{deploy[:user]}:#{deploy[:group]} #{node[:drupal][:ebs][:mount_point]}
      EOH
    end
