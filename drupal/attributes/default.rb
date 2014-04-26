@@ -25,3 +25,8 @@ default[:drupal][:php][:error_reporting] = 'E_ALL & ~E_DEPRECATED'
 default[:drupal][:php][:display_errors] = 'Off'
 default[:drupal][:php][:post_max_size] = '20M'
 
+
+override['varnish']['version'] = '3.0'
+override[:apache][:listen_ports] = [ '8080','443' ]
+override['varnish']['listen_port'] = 80
+override['varnish']['storage_size'] = '256M'

@@ -8,6 +8,8 @@
 #
 
 include_recipe 'wkhtmltopdf'
+include_recipe 'varnish::apt_repo'
+include_recipe 'varnish'
 
 package "drush" do
   action :install
@@ -35,6 +37,8 @@ end
 php_pear "uploadprogress" do
   action :install
 end
+
+
 
 
 

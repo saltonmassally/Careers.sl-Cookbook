@@ -55,6 +55,12 @@ remote_file "/usr/local/tomcat/webapps/solr.war" do
   mode 0755
 end
 
+directory '/usr/local/tomcat/conf/Catalina/localhost' do
+  owner node['solr_drupal']['tomcat_user']
+  group node['solr_drupal']['tomcat_group']
+  mode 0755
+  recursive true
+end
 
 
 template "/usr/local/tomcat/conf/Catalina/localhost/solr.xml" do
