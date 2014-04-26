@@ -129,4 +129,15 @@ bash "copy_source_3" do
     chown -R #{node['solr_drupal']['tomcat_user']}:#{node['solr_drupal']['tomcat_group']} /usr/local/tomcat/solr/drupal
     EOH
 end
+ 
+template "/etc/init.d/tomcat" do
+  source 'tomcat.erb'
+  mode '744'
+end
+
+bash "install_init_script" do
+    code <<-EOH
+       update-rc.d tomcat defaults
+    EOH
+end
 
