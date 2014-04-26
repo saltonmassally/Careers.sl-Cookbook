@@ -253,7 +253,7 @@ INSTALLED_APPS = (
 
 
 RAVEN_CONFIG = {
-    'dsn': '<%=[:smssuite][:raven_dns]}',
+    'dsn': '<%=node[:smssuite][:raven_dns]%>',
 }
 
 DEFAULT_FROM_EMAIL = 'developer@careers.sl'

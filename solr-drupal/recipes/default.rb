@@ -16,10 +16,14 @@ package 'openjdk-7-jdk'
 
 group node[:solr_drupal][:tomcat_group]
 
-bash "change_owner" do
-  code <<-EOH
-    useradd -Mb /usr/local #{node[:solr_drupal][:tomcat_user]} -g #{node[:solr_drupal][:tomcat_group]}
-  EOH
+
+user node[:solr_drupal][:tomcat_user] do
+  gid node[:solr_drupal][:tomcat_group]
+  home "/usr/local/#{node[:solr_drupal][:tomcat_user]}"
+  shell "/bin/bash"
+  system true
+  supports :manage_home => true
+  action :create
 end
 
 ark 'tomcat' do
@@ -120,8 +124,6 @@ directory "/usr/local/tomcat/solr/drupal" do
   mode 0755
   recursive true
 end
-
-
 
 bash "copy_source_3" do
     code <<-EOH
