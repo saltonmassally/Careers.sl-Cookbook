@@ -23,7 +23,7 @@ node[:deploy].each do |application, deploy|
     EOH
    end
 
-  template node[:smssuite][:settings_file] do
+  template "#{deploy[:absolute_document_root]}node[:smssuite][:settings_file]" do
     source "settings.py.erb"
     owner deploy[:user]
     group deploy[:group]

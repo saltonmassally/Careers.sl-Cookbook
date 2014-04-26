@@ -24,7 +24,7 @@ node[:deploy].each do |application, deploy|
   end
  
   cron "drupal_cron" do
-    command "cd #{deploy[:absolute_document_root]}; /usr/bin/php cron.php"
+    command "cd #{deploy[:absolute_document_root]}; drush cron"
     minute "*/15"
   end
 

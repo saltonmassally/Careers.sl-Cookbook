@@ -52,12 +52,12 @@ cron "snapshot_create_cron" do
    command "/usr/bin/snapshot_create >> /var/log/snapshotting/backup-create.log"
    hour "*/12"
    minute "0"
-   only_if  { File.exist?("/usr/bin/snapshot_create.sh") }
+   only_if  { File.exist?("/usr/bin/snapshot_create") }
 end
 
 cron "snapshot_delete_cron" do
    command "/usr/bin/snapshot_delete >> /var/log/snapshotting/backup-delete.log"
    hour "3"
    minute "0"
-   only_if  { File.exist?("/usr/bin/snapshot_create.sh") }
+   only_if  { File.exist?("/usr/bin/snapshot_delete") }
 end
