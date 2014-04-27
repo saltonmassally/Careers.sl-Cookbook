@@ -23,5 +23,5 @@ cookbook 'supervisor'
 cookbook 'java'
 cookbook 'varnish'
 cookbook 'runit'
-cookbook 'supervisord', git: 'git://github.com/needle-cookbooks/chef-supervisord.git'
+cookbook 'supervisord',
 cookbook 'celery', git: 'git://github.com/needle-cookbooks/chef-celery.git'
